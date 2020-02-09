@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Home {% if user_name %}
+				{{ user_name }}
+				{% endif %}</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/DataTables/datatables.css') }}">
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+	<script src="{{ url_for('static', filename='styles/DataTables/jquery-3.3.1.js') }}"></script>
+	<script src="{{ url_for('static', filename='styles/DataTables/datatables.js') }}"></script>
+
+	<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='styles/images/icons/favicon.ico') }}"/>
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vendor/bootstrap/css/bootstrap.min.css') }}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/fonts/Linearicons-Free-v1.0.0/icon-font.min.css') }}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vendor/animate/animate.css') }}">
+	<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vendor/css-hamburgers/hamburgers.min.css') }}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vendor/select2/select2.min.css') }}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/css/util.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/css/main.css') }}">
+	<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-l-50 p-r-50 p-t-77 p-b-30">
+				<span class="login100-form-title p-b-55">
+					Hello {% if user_name %}
+							{{ user_name }}
+							{% endif %}
+				</span>
+				<div class="text-center w-full p-t-115">						
+						<a class="txt1 bo1 hov1" href="/logout">
+							Log Out						
+						</a>
+					</div>
+				
+				<form class="login100-form validate-form">
+					
+					<span class="login100-form-title p-b-55">
+						{% with messages = get_flashed_messages() %}
+						{% if messages %}
+						{% for message in messages %}
+						{{ message }}
+						{% endfor %}
+
+						{% endif %}
+						{% endwith %}
+					</span>
+
+					<div id="tables-data" style="width: 100%;">
+
+					<table id="table_id" class="display" style="width: 100%;">
+						<thead>
+							<th>Name</th>
+							<th>Email</th>
+							<th>Password</th>
+							<th>Profile</th>
+							{% if userdata['user_role'] == '2' %}
+							<th>Action</th>
+							{% endif %}
+						</thead>
+						<tbody>
+							
+							<tr>
+								<td>{{ userdata['user_name'] }}</td>
+								<td>{{ userdata['user_email'] }}</td>
+								<td>{{ userdata['password_raw'] }}</td>
+								<td>
+										{% if userdata.user_profile != 'None' %}
+											<img src="static/uploads/{{userdata.user_profile}}" width="50" height="50">
+											{% else %}
+											{{ row.user_profile }}
+										{% endif %}
+									</td>
+								{% if userdata['user_role'] == '2' %}
+								<td> <a href="updateuser_view/{{ userdata.user_id }}"> Edit </a></td>
+								{% endif %}
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!--===============================================================================================-->	
+<!-- <script src="{{ url_for('static', filename='styles/vendor/jquery/jquery-3.2.1.min.js') }}"></script> -->
+<!--===============================================================================================-->
+<script src="{{ url_for('static', filename='styles/vendor/bootstrap/js/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='styles/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+<!--===============================================================================================-->
+<script src="{{ url_for('static', filename='styles/vendor/select2/select2.min.js') }}"></script>
+<!--===============================================================================================-->
+<script src="{{ url_for('static', filename='styles/js/main.js') }}"></script>
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+	// $(document).ready(function(){
+	// 	$('#addusr').click(function(){
+	// 		window.location.href = '/adduser_view';
+	// 	});
+	// 	$('#table_id').DataTable();	
+
+
+	// });
+
+
+</script>

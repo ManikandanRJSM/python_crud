@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login Admin Home</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/DataTables/datatables.css') }}">
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+	<script src="{{ url_for('static', filename='styles/DataTables/jquery-3.3.1.js') }}"></script>
+	<script src="{{ url_for('static', filename='styles/DataTables/datatables.js') }}"></script>
+
+	<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='styles/images/icons/favicon.ico') }}"/>
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vendor/bootstrap/css/bootstrap.min.css') }}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/fonts/Linearicons-Free-v1.0.0/icon-font.min.css') }}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vendor/animate/animate.css') }}">
+	<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vendor/css-hamburgers/hamburgers.min.css') }}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vendor/select2/select2.min.css') }}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/css/util.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/css/main.css') }}">
+	<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-l-50 p-r-50 p-t-77 p-b-30">
+				<span class="login100-form-title p-b-55">
+					Users List
+				</span>
+				Howdy {% if user_name %}
+							{{ user_name }}
+						{% endif %}
+				<div class="">
+					<button class="login100-form-btn-addusr" id="addusr">
+						Add Users
+					</button>
+					<div class="text-center">						
+						<a class="txt1 bo1 hov1" href="/logout">
+							Log Out						
+						</a>
+					</div>
+				</div>
+				<span class="login100-form-title p-b-55">
+						{% with messages = get_flashed_messages() %}
+						{% if messages %}
+						{% for message in messages %}
+						{{ message }}
+						{% endfor %}
+
+						{% endif %}
+						{% endwith %}
+					</span>
+				<form class="login100-form validate-form">
+					
+					
+
+					<div id="tables-data" style="width: 100%;">
+
+						<table id="table_id" class="display" style="width: 100%;">
+							<thead>
+								<th>id</th>
+								<th>Name</th>
+								<th>Email</th>
+								<th>Password</th>
+								<th>Profile</th>
+								<th>Role</th>
+								<th>Action</th>
+							</thead>
+							<tbody>
+								{% for row in rows %}
+								<tr>
+									<td>{{ loop.index }}</td>
+									<td>{{ row.user_name }}</td>
+									<td>{{ row.user_email }}</td>
+									<td>{{ row.password_raw }}</td>
+									<td>
+										{% if row.user_profile != 'None' %}
+											<img src="static/uploads/{{row.user_profile}}" width="50" height="50">
+											{% else %}
+											{{ row.user_profile }}
+										{% endif %}
+									</td>
+
+									<td>{% if row.user_role == '1' %}
+									Admin
+									{% elif row.user_role == '2' %}
+									User
+									{% elif row.user_role == '3' %}
+									Guest
+									{% endif %}</td>
+									<td><a href="editusers/{{ row.user_id }}"> Edit </a> | <a href="delete/{{ row.user_id }}"> Delete </a></td>
+								</tr>
+								{% endfor %}
+
+							</tbody>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--===============================================================================================-->	
+	<!-- <script src="{{ url_for('static', filename='styles/vendor/jquery/jquery-3.2.1.min.js') }}"></script> -->
+	<!--===============================================================================================-->
+	<script src="{{ url_for('static', filename='styles/vendor/bootstrap/js/popper.js') }}"></script>
+	<script src="{{ url_for('static', filename='styles/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+	<!--===============================================================================================-->
+	<script src="{{ url_for('static', filename='styles/vendor/select2/select2.min.js') }}"></script>
+	<!--===============================================================================================-->
+	<script src="{{ url_for('static', filename='styles/js/main.js') }}"></script>
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#addusr').click(function(){
+			window.location.href = '/adduser_view';
+		});
+		$('#table_id').DataTable();	
+
+
+	});
+
+
+</script>

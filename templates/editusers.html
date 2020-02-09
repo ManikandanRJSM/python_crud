@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Edit Users</title>
+	<!-- <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> -->
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='styles/images/icons/favicon.ico') }}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vendor/bootstrap/css/bootstrap.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/fonts/Linearicons-Free-v1.0.0/icon-font.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vendor/animate/animate.css') }}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vendor/css-hamburgers/hamburgers.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vendor/select2/select2.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/css/util.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/css/main.css') }}">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login-page-login100 p-l-50 p-r-50 p-t-77 p-b-30">
+				<form class="login100-form validate-form" method="post" action="/update">
+					<span class="login100-form-title p-b-55">
+						Edit User
+					</span>
+
+					<div class="wrap-input100 validate-input m-b-16">
+						<input class="input100" type="text" name="uname" placeholder="User Name" value="{{ row['user_name'] }}">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<span class="lnr lnr-envelope"></span>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-16" data-validate = "Valid email is required: ex@abc.xyz" >
+						<input class="input100" type="text" name="email" placeholder="Email" value="{{ row['user_email'] }}">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<span class="lnr lnr-envelope"></span>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-16" data-validate = "Password is required">
+						<input class="input100" type="password" name="pass" placeholder="Password">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<span class="lnr lnr-lock"></span>
+						</span>
+					</div>
+					{% if user_role == '1' %}
+					<div class="wrap-input100 validate-input m-b-16">
+						<select class="input100" name="user_role">
+							<option value="1"{% if row['user_role'] == '1' %} selected="selected"{% endif %}>Admin</option>
+							<option value="2"{% if row['user_role'] == '2' %} selected="selected"{% endif %}>Normal Users</option>
+							<option value="3"{% if row['user_role'] == '3' %} selected="selected"{% endif %}>Guest</option>
+						</select>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<span class="lnr lnr-envelope"></span>
+						</span>
+					</div>
+					{% endif %}
+
+					<div class="wrap-input100">
+							<input type="file" name="file" autocomplete="off">
+							{% if row['user_profile'] != '' %}
+							<img src="{{ url_for('static', filename='uploads/'+ row['user_profile']) }}" width="50" height="50">
+							{% endif %}
+						</div>
+
+					<input name="id" value="{{ row['user_id'] }}" type="hidden">
+					<input name="user_profile" value="{{ row['user_profile'] }}" type="hidden">
+					<div class="container-login100-form-btn p-t-25">
+						<button class="login100-form-btn">
+							Update
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	
+<!--===============================================================================================-->	
+	<script src="{{ url_for('static', filename='styles/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for('static', filename='styles/vendor/bootstrap/js/popper.js') }}"></script>
+	<script src="{{ url_for('static', filename='styles/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for('static', filename='styles/vendor/select2/select2.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for('static', filename='styles/js/main.js') }}"></script>
+
+</body>
+</html>
