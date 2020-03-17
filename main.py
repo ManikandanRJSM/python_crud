@@ -195,6 +195,16 @@ def update_user():
             _password = request.form['pass']
             _id = request.form['id']
             _user_role = request.form['user_role']
+            _profile = request.files['file']
+
+            if _profile.filename != '':
+                f = _profile
+                f.save(os.path.join('D:/learning/python_crud/static/uploads', f.filename))
+                file_data = f.filename
+            else:
+                 f = request.form['user_profile']
+                 file_data = f
+
             if 'role' in session:
                 user_role = session['role']
             # validate the received values
@@ -203,11 +213,11 @@ def update_user():
                     _hashed_password = generate_password_hash(_password)
                     # save edits
                     if user_role == '1':
-                        sql = "UPDATE users SET user_name=%s, user_email=%s, user_password=%s, password_raw=%s, user_role=%s WHERE user_id=%s"
-                        data = (_name, _email, _hashed_password, _password, _user_role, _id,)
+                        sql = "UPDATE users SET user_name=%s, user_email=%s, user_password=%s, password_raw=%s, user_profile=%s, user_role=%s WHERE user_id=%s"
+                        data = (_name, _email, _hashed_password, _password, file_data, _user_role, _id,)
                     else:
-                        sql = "UPDATE users SET user_name=%s, user_email=%s, user_password=%s, password_raw=%s WHERE user_id=%s"
-                        data = (_name, _email, _hashed_password, _password, _id)
+                        sql = "UPDATE users SET user_name=%s, user_email=%s, user_password=%s, user_profile=%s, password_raw=%s WHERE user_id=%s"
+                        data = (_name, _email, _hashed_password, file_data, _password, _id)
 
                     conn = mysql.connect()
                     cursor = conn.cursor()
